@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+
+  db:
+    build: ./db
+    command: 'mysqld --innodb-flush-method=fsync'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123123
+    volumes: 
+        - ./database:/var/lib/mysql
+    
+
+  adminer:
+    build: ./adminer
+    restart: always
+    ports:
+      - 8088:8080
