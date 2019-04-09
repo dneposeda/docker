@@ -1,10 +1,11 @@
 # docker
+```sh
 docker-compose up --build
+```
+Frontend - `nginx`
 
-Frontend - nginx
+Backend - `Apache + php`
 
-Backend - Apache + php
+DB - `MariaDB`
 
-DB - MariaDB
-
-Database management - adminer
+Database management - `adminer`
