@@ -9,3 +9,5 @@ Backend - `Apache + php`
 DB - `MariaDB`
 
 Database management - `adminer`
+
+Local storage database -> `./db/data-db`
