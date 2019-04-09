@@ -1,0 +1,61 @@
+version: '3.7'
+
+services:
+
+    db:
+        build: ./db/
+        command: 'mysqld --innodb-flush-method=fsync'
+        networks:
+            - backend
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        volumes: 
+            - ./db/data-db:/var/lib/mysql
+            - ./db/conf:/etc/mysql/conf.d
+
+    php:
+        build: ./backend/php/
+        networks:
+            - backend
+        volumes:
+            - ./src:/var/www/html
+            - ./backend/php/php.ini:/usr/local/etc/php/php.ini
+
+    backend:
+        build: ./backend/apache/
+        networks:
+            - backend
+        volumes:
+            - ./src:/var/www/html
+            - ./backend/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+        depends_on:
+            - php
+
+    frontend:
+        build: ./frontend/nginx/
+        networks:
+            - frontend
+            - backend
+        ports:
+            - 9080:80
+        volumes:
+            - ./src:/var/www/html
+            - ./frontend/nginx/nginx.conf:/etc/nginx/nginx.conf
+        depends_on:
+            - backend
+
+    adminer:
+        build: ./db-editor/
+        networks:
+            - backend
+            - frontend
+        restart: always
+        ports:
+            - 9088:8080
+        depends_on:
+            - db
+
+networks:
+    frontend:
+    backend:

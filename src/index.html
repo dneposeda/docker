@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+	<div style="margin: 0 auto; width: 600px">
+		<h1>Новости</h1>
+		<h3 class="titleNews"></h3>
+		<p class="descriptionNews"><p>
+		<span class="dateNews"></span>
+	</div>
+	
+	<script>
+
+	$.ajax({
+		url: "/backend/api/news/1",
+		complete: function(result){
+			result = JSON.parse(result.responseText);
+			console.log(result);
+			$('.titleNews').html(result[0].title);
+			$('.descriptionNews').html(result[0].text);
+			$('.dateNews').html(result[0].date);
+		}
+	});
+	
+	
+	</script>
+	
+</body>
+</html>
